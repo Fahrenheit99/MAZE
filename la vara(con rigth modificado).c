@@ -504,7 +504,7 @@ void randomMouse()
     printf("Cant Nodos = %d\n", cant_nodos);
 }
 
-void rigth_plegde()
+void rigth_hand()
 {
     if( !hasBegun )
     {
@@ -589,8 +589,7 @@ void left_hand()
     printf("\nCant Nodo = %d\n", cant_nodos);
 }
 
-
-void rigth_hand()
+void pledgeR()
 {
     if( !hasBegun )
     {
@@ -603,36 +602,54 @@ void rigth_hand()
     int cant_nodos=1;
     int front_D=0;
     int rigth_D=270;
+    int vueltas = 0;
     while( RATA[0] != Exit[0] || RATA[1] != Exit[1] )
     {
-        int wallCount = matriz[ RATA[0] ][ RATA[1] ];
+         int wallCount = matriz[ RATA[0] ][ RATA[1] ];
         printf("\n%d) ", cant_nodos);
         printf("\ncurrent = [%d][%d]",RATA[0], RATA[1]);
         printf("\nDirection = %d",front_D);
         printf("\nWallCount = %d", wallCount);
+        printf("\nVueltas Count = %d", vueltas);
         printf("\n");
         myPause();
-        if( hasFront(front_D) )
+        if( hasRigth(front_D) )
         {
-            adelante(front_D);
-            cant_nodos++;
+            if( hasFront(front_D) )
+            {
+                adelante(front_D);
+                cant_nodos++;
+            }
+            else
+            {
+                rigth_D = front_D;
+                front_D = (rigth_D+90)%360;
+                vueltas--;
+                
+            }
         }
         else
         {
             front_D = rigth_D;
-            rigth_D = (rigth_D+90)%360;
+            rigth_D = (front_D+270)%360;
+            vueltas++;
+            adelante(front_D);
+            cant_nodos++;
         }
     }
     printf("\nCant Nodo = %d\n", cant_nodos);
 }
+
+
+
 
 //____________________________________________________EL_MAIN()___________________________________________________________-
 
 int main()
 {
     srand((unsigned) time(NULL));
-    fil=100;
-    col=100;
+    fil=4;
+    col=4;
     matriz = (int**)malloc(fil * sizeof(int*));
     for(int e=0; e<fil; e++)matriz[e]=(int* )malloc(col * sizeof(int* ));
     filas = (int*)malloc( fil*col*sizeof(int*) );
@@ -667,9 +684,11 @@ int main()
     start_final_conection();
 
     //randomMouse();
-    printMaze();
-    myPause();
-    rigth_hand();
+    //printMaze();
+    //printf("\n");
+    //pledgeR();
+    //myPause();
+    //rigth_hand();
     //left_hand();
     //printEstados();
     //printMaze();
