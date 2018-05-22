@@ -437,6 +437,32 @@ int hasRigth(int direction)
     return 1;
 }
 
+int hasLeft(int direction)
+{
+    int wallCount = matriz[ RATA[0] ][ RATA[1] ];
+    if(wallCount >=8)
+    {
+        if(direction==0) return 0;
+        else wallCount -=8;
+    }
+    if(wallCount >=4)
+    {
+        if(direction==90) return 0;
+        else wallCount -=4;
+    }
+    if(wallCount >=2)
+    {
+        if(direction==180) return 0;
+        else wallCount -=2;
+    }
+    if(wallCount >=1)
+    {
+        if(direction==270) return 0;
+        else wallCount -=1;
+    }
+    return 1;
+}
+
 int adelante(int direction)
 {
     pRATA[0] = RATA[0];
@@ -445,6 +471,12 @@ int adelante(int direction)
     else if(direction==90) RATA[0]--;
     else if(direction==180) RATA[1]--;
     else if(direction=270) RATA[0]++;
+}
+
+void myPause () {
+  printf ( "Press [Enter] to continue ...\t" );
+  fflush ( stdout );
+  getchar();
 }
 
 
@@ -485,23 +517,10 @@ void rigth_hand()
     int cant_nodos=1;
     int front_D=0;
     int rigth_D=270;
-    //front_D = define_front();
-    //rigth_D = calc_rigth(front_D);
-    int wallCount = matriz[ RATA[0] ][ RATA[1] ];
-    //printf("\nBegin_WallCount = %d", wallCount);
-    //printf("\nDirection = %d", direction);
-
     while( RATA[0] != Exit[0] || RATA[1] != Exit[1] )
     {
-        int wallCount = matriz[ RATA[0] ][ RATA[1] ];
-        /*printf("\n%d) ", cant_nodos);
-        printf("\ncurrent = [%d][%d]",RATA[0], RATA[1]);
-        printf("\nDirection = %d",front_D);
-        printf("\nWallCount = %d", wallCount);
-        printf("\n");*/
         if( hasRigth(front_D) )
         {
-          //  printf("\nHas rigth");
             if( hasFront(front_D) )
             {
                 adelante(front_D);
@@ -524,14 +543,60 @@ void rigth_hand()
     printf("\nCant Nodo = %d\n", cant_nodos);
 }
 
+void left_hand()
+{
+    if( !hasBegun )
+    {
+        matriz[ Entry[0] ][ Entry[1] ] -=4;
+        matriz[ Exit[0] ][ Exit[1] ] -=1;
+        hasBegun++;
+    }
+    RATA[0] = Entry[0];
+    RATA[1] = Entry[1];
+    int cant_nodos=1;
+    int front_D=0;
+    int left_D=90;
+    while( RATA[0] != Exit[0] || RATA[1] != Exit[1] )
+    {
+        /*int wallCount = matriz[ RATA[0] ][ RATA[1] ];
+        printf("\n%d) ", cant_nodos);
+        printf("\ncurrent = [%d][%d]",RATA[0], RATA[1]);
+        printf("\nDirection = %d",front_D);
+        printf("\nWallCount = %d", wallCount);
+        printf("\n");
+        myPause();*/
+        if( hasLeft(front_D) )
+        {
+            if( hasFront(front_D) )
+            {
+                adelante(front_D);
+                cant_nodos++;
+            }
+            else
+            {
+                left_D = front_D;
+                front_D = (left_D+270)%360;
+            }
+        }
+        else
+        {
+            front_D = left_D;
+            left_D = (front_D+90)%360;
+            adelante(front_D);
+            cant_nodos++;
+        }
+    }
+    printf("\nCant Nodo = %d\n", cant_nodos);
+}
+
 
 //____________________________________________________EL_MAIN()___________________________________________________________-
 
 int main()
 {
     srand((unsigned) time(NULL));
-    fil=2048;
-    col=2048;
+    fil=4;
+    col=4;
     matriz = (int**)malloc(fil * sizeof(int*));
     for(int e=0; e<fil; e++)matriz[e]=(int* )malloc(col * sizeof(int* ));
     filas = (int*)malloc( fil*col*sizeof(int*) );
@@ -566,13 +631,17 @@ int main()
     start_final_conection();
 
     //randomMouse();
-    /*printMaze();
-    int pausa;
-    scanf( "%d",&pausa );*/
-    rigth_hand();
+    //printMaze();
+    //myPause():
+    //rigth_hand();
+    left_hand();
     //printEstados();
     //printMaze();
 }
 
 
 //hacer que todas las listas empiecen en 2048
+
+
+
+
