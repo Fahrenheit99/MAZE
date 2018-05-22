@@ -684,6 +684,7 @@ int main()
     //randomMouse();
     //printMaze();
     //printf("\n");
+    printf("Entry[%d][%d]\nExit[%d][%d]\n", Entry[0], Entry[1], Exit[0], Exit[1]);
     //myPause();
     //pledgeR();
     //rigth_hand();
