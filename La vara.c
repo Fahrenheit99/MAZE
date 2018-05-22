@@ -268,15 +268,20 @@ void start_final_conection()
         {
             Entry[0] = pos_fila;
             Entry[1] = 0;
+            
             Exit[0] = pos_fila;
             Exit[1] = col-1;
+            Exit_angle=0;
+            
         }
         else
         {
             Entry[0] = pos_fila;
             Entry[1] = col-1;
+            
             Exit[0] = pos_fila;
             Exit[1] = 0;
+            Exit_angle=180;
         }
     }
     else 
@@ -287,15 +292,19 @@ void start_final_conection()
         {
             Entry[0] = 0;
             Entry[1] = pos_col;
+            
             Exit[0] = fil-1;
             Exit[1] = pos_col;
+            Exit_angle = 270;
         }
         else
         {
             Entry[0] = fil-1;
             Entry[1] = pos_col;
+            
             Exit[0] = 0;
             Exit[1] = pos_col;
+            Exit_angle= 90;
         }
     }
 
