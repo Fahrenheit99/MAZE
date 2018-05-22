@@ -258,26 +258,48 @@ int allOne()
 
 void start_final_conection()
 {
-    int opcion = rand() % 1;
+    int option = rand() % 2;
+    
+    if(!option)
+    {
+        int pos_fila = rand()%(fil-1);
+        option = rand() % 2;
+        if(!option)
+        {
+            Entry[0] = pos_fila;
+            Entry[1] = 0;
+            Exit[0] = pos_fila;
+            Exit[1] = col-1;
+        }
+        else
+        {
+            Entry[0] = pos_fila;
+            Entry[1] = col-1;
+            Exit[0] = pos_fila;
+            Exit[1] = 0;
+        }
+    }
+    else 
+    {
+        int pos_col = rand()%(col-1);
+        option = rand()%2;
+        if(!option)
+        {
+            Entry[0] = 0;
+            Entry[1] = pos_col;
+            Exit[0] = fil-1;
+            Exit[1] = pos_col;
+        }
+        else
+        {
+            Entry[0] = fil-1;
+            Entry[1] = pos_col;
+            Exit[0] = 0;
+            Exit[1] = pos_col;
+        }
+    }
 
-    if(!opcion)
-    {
-        matriz[0][0] += 4;
-        matriz[fil-1][col-1] += 1;
-        Entry[0] =0;
-        Entry[1] =0;
-        Exit[0] = fil-1;
-        Exit[1] = col-1;
-    }
-    if(opcion)
-    {
-        matriz[0][col-1] += 1;
-        matriz[fil-1][0] += 4;
-        Exit[0] =0;
-        Exit[1] =col-1;
-        Entry[0] = fil-1;
-        Entry[1] = 0;
-    }
+    
 }
 
 
@@ -485,12 +507,6 @@ void randomMouse()
 {
     RATA[0] = Entry[0];
     RATA[1] = Entry[1];
-    if( !hasBegun )
-    {
-        matriz[ Entry[0] ][ Entry[1] ] -=4;
-        matriz[ Exit[0] ][ Exit[1] ] -=1;
-        hasBegun++;
-    }
     int cant_nodos = 1;
     //printf("\nEntrada [%d][%d]\nSalida [%d][%d]\n",Entry[0], Entry[1], Exit[0], Exit[1]);
 
@@ -506,12 +522,6 @@ void randomMouse()
 
 void rigth_hand()
 {
-    if( !hasBegun )
-    {
-        matriz[ Entry[0] ][ Entry[1] ] -=4;
-        matriz[ Exit[0] ][ Exit[1] ] -=1;
-        hasBegun++;
-    }
     RATA[0] = Entry[0];
     RATA[1] = Entry[1];
     int cant_nodos=1;
@@ -545,12 +555,6 @@ void rigth_hand()
 
 void left_hand()
 {
-    if( !hasBegun )
-    {
-        matriz[ Entry[0] ][ Entry[1] ] -=4;
-        matriz[ Exit[0] ][ Exit[1] ] -=1;
-        hasBegun++;
-    }
     RATA[0] = Entry[0];
     RATA[1] = Entry[1];
     int cant_nodos=1;
@@ -588,6 +592,53 @@ void left_hand()
     }
     printf("\nCant Nodo = %d\n", cant_nodos);
 }
+
+void pledgeR()
+{
+    RATA[0] = Entry[0];
+    RATA[1] = Entry[1];
+    int cant_nodos=1;
+    int front_D=0;
+    int rigth_D=270;
+    int vueltas = 0;
+    while( RATA[0] != Exit[0] || RATA[1] != Exit[1] )
+    {
+         int wallCount = matriz[ RATA[0] ][ RATA[1] ];
+        printf("\n%d) ", cant_nodos);
+        printf("\ncurrent = [%d][%d]",RATA[0], RATA[1]);
+        printf("\nDirection = %d",front_D);
+        printf("\nWallCount = %d", wallCount);
+        printf("\nVueltas Count = %d", vueltas);
+        printf("\n");
+        myPause();
+        if( hasRigth(front_D) )
+        {
+            if( hasFront(front_D) )
+            {
+                adelante(front_D);
+                cant_nodos++;
+            }
+            else
+            {
+                rigth_D = front_D;
+                front_D = (rigth_D+90)%360;
+                vueltas--;
+                
+            }
+        }
+        else
+        {
+            front_D = rigth_D;
+            rigth_D = (front_D+270)%360;
+            vueltas++;
+            adelante(front_D);
+            cant_nodos++;
+        }
+    }
+    printf("\nCant Nodo = %d\n", cant_nodos);
+}
+
+
 
 
 //____________________________________________________EL_MAIN()___________________________________________________________-
@@ -632,16 +683,17 @@ int main()
 
     //randomMouse();
     //printMaze();
-    //myPause():
+    //printf("\n");
+    //myPause();
+    //pledgeR();
     //rigth_hand();
-    left_hand();
+    //left_hand();
     //printEstados();
     //printMaze();
 }
 
 
 //hacer que todas las listas empiecen en 2048
-
 
 
 
