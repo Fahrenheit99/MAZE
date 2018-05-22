@@ -184,7 +184,7 @@ void randomMouse()
     printf("Cant Nodos = %d\n", cant_nodos);
 }
 
-void rigth_plegde()
+void rigth_hand()
 {
     if( !hasBegun )
     {
@@ -270,7 +270,7 @@ void left_hand()
 }
 
 
-void rigth_hand()
+void rigth_hand_feo()
 {
     if( !hasBegun )
     {
