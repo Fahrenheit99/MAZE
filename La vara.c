@@ -512,7 +512,6 @@ void myPause () {
 
 
 //_________________________________________________SOLUCIONES PRINCIPALES_____________________________________________-
-//_________________________________________________SOLUCIONES PRINCIPALES_____________________________________________-
 void randomMouse()
 {
     RATA[0] = Entry[0];
@@ -537,7 +536,7 @@ void rigth_hand()
     int cant_nodos=1;
     int front_D=0;
     int rigth_D=270;
-    while( RATA[0] != Exit[0] || RATA[1] != Exit[1] || Exit_angle != front_D )
+    while( RATA[0] != Exit[0] || RATA[1] != Exit[1] )
     {
         if( hasRigth(front_D) )
         {
@@ -570,7 +569,7 @@ void left_hand()
     int cant_nodos=1;
     int front_D=0;
     int left_D=90;
-    while( RATA[0] != Exit[0] || RATA[1] != Exit[1] || Exit_angle != front_D )
+    while( RATA[0] != Exit[0] || RATA[1] != Exit[1])
     {
         /*int wallCount = matriz[ RATA[0] ][ RATA[1] ];
         printf("\n%d) ", cant_nodos);
@@ -611,7 +610,7 @@ void pledgeR()
     int front_D=0;
     int rigth_D=270;
     int vueltas = 0;
-    while( RATA[0] != Exit[0] || RATA[1] != Exit[1] || Exit_angle != front_D)
+    while( RATA[0] != Exit[0] || RATA[1] != Exit[1] )
     {
          int wallCount = matriz[ RATA[0] ][ RATA[1] ];
         printf("\n%d) ", cant_nodos);
@@ -647,6 +646,7 @@ void pledgeR()
     }
     printf("\nCant Nodo = %d\n", cant_nodos);
 }
+
 
 
 
@@ -691,11 +691,11 @@ int main()
     start_final_conection();
 
     //randomMouse();
-    //printMaze();
-    //printf("\n");
+    printMaze();
+    printf("\n");
     printf("Entry[%d][%d]\nExit[%d][%d]\n", Entry[0], Entry[1], Exit[0], Exit[1]);
-    //myPause();
-    //pledgeR();
+    myPause();
+    pledgeR();
     //rigth_hand();
     //left_hand();
     //printEstados();
@@ -704,6 +704,5 @@ int main()
 
 
 //hacer que todas las listas empiecen en 2048
-
 
 
